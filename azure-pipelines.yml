@@ -19,5 +19,5 @@ steps:
     resourceGroupName: 'Rg-AKS-Cluster-Demo'
     location: 'Canada East'
     templateLocation: 'URL of the file'
-    csmFileLink: 'https://raw.githubusercontent.com/provenchez/ARM_templates_demo/main/Tuto/blobStorage.json?token=ADCYILJ6FKAHRMZC4SFWFVTAKTBKM'
+    csmFileLink: 'https://raw.githubusercontent.com/provenchez/ARM_templates_demo/main/Tuto/ContainerRegistry.json?token=ADCYILJ6FKAHRMZC4SFWFVTAKTBKM'
     deploymentMode: 'Incremental'
