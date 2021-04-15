@@ -2,81 +2,45 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "storageAccounts_sepaqstorageaccountdemo_name": {
-            "defaultValue": "sepaqstorageaccountdemo",
+        "registries_bellcontainerregistry_name": {
+            "defaultValue": "bellcontainerregistry",
             "type": "String"
         }
     },
     "variables": {},
     "resources": [
         {
-            "type": "Microsoft.Storage/storageAccounts",
-            "apiVersion": "2021-01-01",
-            "name": "[parameters('storageAccounts_sepaqstorageaccountdemo_name')]",
+            "type": "Microsoft.ContainerRegistry/registries",
+            "apiVersion": "2020-11-01-preview",
+            "name": "[parameters('registries_bellcontainerregistry_name')]",
             "location": "eastus",
             "sku": {
-                "name": "Standard_LRS",
-                "tier": "Standard"
+                "name": "Basic",
+                "tier": "Basic"
             },
-            "kind": "BlobStorage",
             "properties": {
-                "minimumTlsVersion": "TLS1_2",
-                "allowBlobPublicAccess": true,
-                "allowSharedKeyAccess": true,
-                "networkAcls": {
-                    "bypass": "AzureServices",
-                    "virtualNetworkRules": [],
-                    "ipRules": [],
-                    "defaultAction": "Deny"
-                },
-                "supportsHttpsTrafficOnly": true,
-                "encryption": {
-                    "services": {
-                        "file": {
-                            "keyType": "Account",
-                            "enabled": true
-                        },
-                        "blob": {
-                            "keyType": "Account",
-                            "enabled": true
-                        }
+                "adminUserEnabled": false,
+                "policies": {
+                    "quarantinePolicy": {
+                        "status": "disabled"
                     },
-                    "keySource": "Microsoft.Storage"
+                    "trustPolicy": {
+                        "type": "Notary",
+                        "status": "disabled"
+                    },
+                    "retentionPolicy": {
+                        "days": 7,
+                        "status": "disabled"
+                    }
                 },
-                "accessTier": "Hot"
-            }
-        },
-        {
-            "type": "Microsoft.Storage/storageAccounts/blobServices",
-            "apiVersion": "2021-01-01",
-            "name": "[concat(parameters('storageAccounts_sepaqstorageaccountdemo_name'), '/default')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_sepaqstorageaccountdemo_name'))]"
-            ],
-            "sku": {
-                "name": "Standard_LRS",
-                "tier": "Standard"
-            },
-            "properties": {
-                "cors": {
-                    "corsRules": []
+                "encryption": {
+                    "status": "disabled"
                 },
-                "deleteRetentionPolicy": {
-                    "enabled": false
-                }
-            }
-        },
-        {
-            "type": "Microsoft.Storage/storageAccounts/tableServices",
-            "apiVersion": "2021-01-01",
-            "name": "[concat(parameters('storageAccounts_sepaqstorageaccountdemo_name'), '/default')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_sepaqstorageaccountdemo_name'))]"
-            ],
-            "properties": {
-                "cors": {
-                    "corsRules": []
-                }
+                "dataEndpointEnabled": false,
+                "publicNetworkAccess": "Enabled",
+                "networkRuleBypassOptions": "AzureServices",
+                "zoneRedundancy": "Disabled",
+                "anonymousPullEnabled": false
             }
         }
     ]
