@@ -13,7 +13,7 @@
             "type": "Microsoft.ContainerRegistry/registries",
             "apiVersion": "2020-11-01-preview",
             "name": "[parameters('registries_bellcontainerregistry_name')]",
-            "location": "westus",
+            "location": "eastus",
             "sku": {
                 "name": "Basic",
                 "tier": "Basic"
